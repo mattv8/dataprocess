@@ -2,7 +2,6 @@
 % Written by Matthew Visnovsky
 % Contact: matt.visnovsk@gmail.com
 % 19 October, 2014
-% REVISION 1 
 %
 % USAGE
 %   This function is useful for sifting through folders with delimited data
