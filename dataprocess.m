@@ -22,7 +22,7 @@
 %       specified keywords [function handle, or string]
 %
 % RETURNS
-%   Datamat: This is a matrix containing the data that was processed using
+%   DataCell: This is a matrix containing the data that was processed using
 %       the inputted function. The data columns are in order of inputted keywords.
 %   ListCell: This is a cell matrix of strings listing the names of all of the
 %       files within the data containing folder. [cell array of strings]
