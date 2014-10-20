@@ -24,16 +24,19 @@
 % RETURNS
 %   Datamat: This is a matrix containing the data that was processed using
 %       the inputted function. The data columns are in order of inputted keywords.
-%   Index: array of index of file position. For example there are 20 files within
-%       the data containing folder, the file containing the keyword is number
-%       10 in the directory listing. The output of Index will then be a
-%       1x1 matrix, and the value will be [10]. [array]
 %   List: This is a cell matrix of strings listing the names of all of the
 %       files within the data containing folder. [cell array of strings]
 %   
+% EXAMPLE USAGE
+%   extension = '.dat';
+%   keywords = {'DYN' 'STA' 'TOT' 'EP'}; 
+%   operation = @mean;
+%   folder_name = uigetdir(pwd,'Select Data Containing Folder');
+%
+%   [Data,List] = dataprocess(folder_name,extension,keywords,operation);
+%
 
- 
-function [Datacell,Index,List] = dataprocess(folder_name,extension,keywords,operation)
+function [Datacell,ListCell] = dataprocess(folder_name,extension,keywords,operation)
 %Check inputs
 if isempty(extension) == 1
     error('Please specify filetype extension as a string (eg. ''.dat'')')
@@ -83,6 +86,7 @@ for i = 1:length(Index) %nested for loop FTW! :D
         if Index(i,j) > 0
         directory{i,j} = sprintf('%s\\%s',folder_name,List{Index(i,j)});
         Datamat(i,j) = operation(load(directory{i,j})); %operation is called as function
+        ListCell{i,j} = List{Index(i,j)}; %saves a new directory listing, isolating files by keyword
         else Datamat(i,j) = nan();
         end
     j=j+1;  %
