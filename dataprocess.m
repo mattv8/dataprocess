@@ -1,6 +1,6 @@
 % 
 % Written by Matthew Visnovsky
-% Contact: matt@visnovsky.us
+% Contact: matt.visnovsk@gmail.com
 % 19 October, 2014
 % REVISION 1 
 %
