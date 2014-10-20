@@ -24,7 +24,7 @@
 % RETURNS
 %   Datamat: This is a matrix containing the data that was processed using
 %       the inputted function. The data columns are in order of inputted keywords.
-%   List: This is a cell matrix of strings listing the names of all of the
+%   ListCell: This is a cell matrix of strings listing the names of all of the
 %       files within the data containing folder. [cell array of strings]
 %   
 % EXAMPLE USAGE
