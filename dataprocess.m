@@ -40,15 +40,14 @@
 
 function [DataCell,ListCell] = dataprocess(folder_name,extension,keywords,operation)
 %Check inputs
-if isempty(extension) == 1, error('Please specify filetype extension as a string (eg. ''.dat'')'),end
-if isempty(keywords) == 1, error('Please specify key words as strings (eg. ''DAT'')'),end
-%Check for proper inputs
-if isa(folder_name, 'char') == 0, error('Please input folder name as a string (eg. ''S:\Program Files\MATLAB\R2014a\data'''),end
+if isa(folder_name, 'char') == 0 && isa(folder_name, 'cell') == 0, error('Please input folder name as a string (eg. ''S:\Program Files\MATLAB\R2014a\data'''),end
 if isa(keywords, 'char') == 0 && isa(keywords, 'cell') == 0, error('Inputted keywords were not a cell or string'), end
-%Check for files
-if  isempty(dir(folder_name)) == 1, error('There are no files in this folder'),end
-%If operation is specified
+if isa(keywords, 'char') == 1 keywords = {keywords},end
 
+%Check for files
+if  isempty(dir(folder_name)) == 1, error('There are no files in this folder with the specified extension'),end
+
+%If operation is specified
 if nargin ==4
     if isa(operation, 'char') == 1
         operation = str2func(operation);
@@ -58,7 +57,7 @@ if nargin ==4
 end
 
 %List data containging folder's contents
-if  length(extension) > 1 %If more than one extension is specified
+if  size(extension(1)) > 1 %If more than one extension is specified
     i=1;
     for k = 1:length(extension)
         ext{i} = strread(sprintf('*%s\n',extension{i}),'%s'); %appends wildcard to beginnging of string
@@ -117,9 +116,8 @@ if nargin == 3
         for j = 1:length(keywords)
             if Index(i,j) > 0
             directory{i,j} = sprintf('%s\\%s',folder_name,List{Index(i,j)});
-            DataCell{i,j} = load(directory{i,j}); %operation is called as function
+            DataCell{i,j} = load(directory{i,j});
             ListCell{i,j} = List{Index(i,j)}; %saves a new directory listing, isolating files by keyword
-            else DataCell{i,j} = nan(); %Uneven cells are padded with NaN's
             end
         j=j+1;  %
         end     %next iteration
