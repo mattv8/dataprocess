@@ -39,13 +39,13 @@
 %
 
 function [DataCell,ListCell] = dataprocess(folder_name,extension,keywords,operation)
-%Check inputs
+% Check inputs
 if isa(folder_name, 'char') == 0 && isa(folder_name, 'cell') == 0, error('Please input folder name as a string (eg. ''S:\Program Files\MATLAB\R2014a\data'''),end
 if isa(keywords, 'char') == 0 && isa(keywords, 'cell') == 0, error('Inputted keywords were not a cell or string'), end
 if isa(keywords, 'char') == 1 keywords = {keywords},end
 
 %Check for files
-if  isempty(dir(folder_name)) == 1, error('There are no files in this folder with the specified extension'),end
+if  isempty(dir(folder_name)) == 1, error('No files were found with the specified extension'),end
 
 %If operation is specified
 if nargin ==4
@@ -101,6 +101,13 @@ for k = 1:length(keywords)
     i=i+1;
 end
 
+%Check for empty cells, indicating discrepancy
+for k = 1:length(keywords)
+    if isempty(Idx{k}) == 1, 
+        error('One or more of the specified keywords was not found. Please check for typos. Dataprocess is case sensitive.')
+    end
+end
+
 %Convert Idx from cell array to matrix, uneven arrays are padded with NaN's
 Idx = cellfun(@transpose,Idx,'UniformOutput',false); % Transpose each cell
 maxSize = max(cellfun(@numel,Idx));    % Get the maximum vector size
@@ -110,7 +117,7 @@ Index = vertcat(Index{:});                  % Vertically concatenate cells
 Index = Index'; % UnTranspose each cell
 
 %Simply load the files if Operation is not specified. 
-if nargin == 3
+% if nargin == 3
     i=1; j=1;
     for i = 1:length(Index)
         for j = 1:length(keywords)
@@ -123,7 +130,7 @@ if nargin == 3
         end     %next iteration
         i=i+1;  %
     end
-end
+% end
 
 %Otherwise perform math on Datamat using Operation
 if nargin == 4 
