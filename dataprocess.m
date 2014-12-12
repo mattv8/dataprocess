@@ -117,7 +117,7 @@ Index = vertcat(Index{:});                  % Vertically concatenate cells
 Index = Index'; % UnTranspose each cell
 
 %Simply load the files if Operation is not specified. 
-% if nargin == 3
+if nargin == 3
     i=1; j=1;
     for i = 1:length(Index)
         for j = 1:length(keywords)
@@ -130,7 +130,7 @@ Index = Index'; % UnTranspose each cell
         end     %next iteration
         i=i+1;  %
     end
-% end
+end
 
 %Otherwise perform math on Datamat using Operation
 if nargin == 4 
